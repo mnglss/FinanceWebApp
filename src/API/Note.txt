@@ -1,0 +1,2 @@
+Run API => dotnet run --project src/API --launch-profile https
+Install Swagger => dotnet add package Swashbuckle.AspNetCore
