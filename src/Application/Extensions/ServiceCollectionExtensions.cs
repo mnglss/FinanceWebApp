@@ -9,6 +9,7 @@ namespace Application.Extensions
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<IJWTService, JWTService>();
 
             return services;
         }

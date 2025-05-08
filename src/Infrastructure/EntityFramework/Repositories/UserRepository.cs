@@ -17,13 +17,14 @@ public class UserRepository(AppDbContext _contex) : Repository<User>(_contex), I
 
     public async Task<List<string>> GetUserRoleByEmailAsync(string email)
     {
-        var user = await _contex.Users
-            .Include(x => x.UserRoles!)
-            .ThenInclude(x => x.Role)
-            .FirstOrDefaultAsync(x => x.Email == email);
-        if (user == null)
+        var userRoles = await _contex.Users
+            .Where(u => u.Email == email)
+            .SelectMany(u => u.UserRoles!)
+            .Select(x => x.Role!.Name)
+            .ToListAsync();
+        if (userRoles == null)
             return [];
-        return user.UserRoles!.Select(x => x.Role!.Name).ToList();
+        return userRoles;
     }
 
     public async Task<bool> UserExistsAsync(string email)

@@ -13,7 +13,8 @@ public class AuthenticationService(
     IUnitOfWork unitOfWork,
     IUserRepository userRepository,
     IValidator<RegisterRequest> registerUserValidator,
-    IValidator<LoginRequest> loginUserValidator
+    IValidator<LoginRequest> loginUserValidator,
+    IJWTService jwtService
 ) : IAuthenticationService
 {
     private const int SaltSize = 16; // 128 / 8 // 16 bytes
@@ -34,21 +35,12 @@ public class AuthenticationService(
         var user = await userRepository.GetUserByEmailAsync(email);
         if (user is null)
             return Result.Failure(AuthError.UserNotFound);
+        
         if (!VerifyPassword(password, user.Password))
             return Result.Failure(AuthError.InvalidPassword);
-        var token = "Token"; // await unitOfWork.TokenService.CreateTokenAsync(user);
-        //return Result.Success(new AuthenticationResponse
-        //{
-        //    Token = token,
-        //    User = new UserResponse
-        //    {
-        //        Id = user.Id,
-        //        FirstName = user.FirstName,
-        //        LastName = user.LastName,
-        //        Email = user.Email,
-        //        Roles = await userRepository.GetUserRoleByEmailAsync(user.Email),
-        //    }
-        //});
+        
+        var token = jwtService.GenerateToken(user);
+        
         return Result.Success(token);
     }
 
