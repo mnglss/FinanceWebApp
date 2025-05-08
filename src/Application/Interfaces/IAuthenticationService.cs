@@ -1,13 +1,14 @@
 
 
-using Application.Models.Request;
+using Application.Common.Results;
+using Application.Models;
 
 namespace Application.Interfaces;
 
 public interface IAuthenticationService
 {
-    Task<string> RegisterAsync(RegisterRequest request);
-    Task<string> LoginAsync(LoginRequest request);
+    Task<Result> RegisterAsync(RegisterRequest request);
+    Task<Result> LoginAsync(LoginRequest request);
     Task LogoutAsync();
     //Task<AuthenticationResponse> RefreshTokenAsync(string token);
 }

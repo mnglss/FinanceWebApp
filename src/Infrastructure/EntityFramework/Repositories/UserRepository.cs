@@ -26,8 +26,8 @@ public class UserRepository(AppDbContext _contex) : Repository<User>(_contex), I
         return user.UserRoles!.Select(x => x.Role!.Name).ToList();
     }
 
-    public Task<bool> UserExistsAsync(string email)
+    public async Task<bool> UserExistsAsync(string email)
     {
-        throw new NotImplementedException();
+        return await _contex.Users.FirstOrDefaultAsync(x => x.Email == email) is not null ? true : false;
     }
 }
