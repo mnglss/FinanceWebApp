@@ -25,7 +25,10 @@ public class AuthenticationService(
     {
         var validationResult = await loginUserValidator.ValidateAsync(request);
         if (!validationResult.IsValid)
-            return Result.Failure(AuthError.ValidationFailure);
+        {
+            var errors = validationResult.Errors.Select(x => x.ErrorMessage);
+            return Result.Failure(AuthError.InvalidRequest(errors));
+        }
 
         var (email, password) = request;
         var user = await userRepository.GetUserByEmailAsync(email);
@@ -58,7 +61,10 @@ public class AuthenticationService(
     {
         var validationResult = await registerUserValidator.ValidateAsync(request);
         if (!validationResult.IsValid)
-            return Result.Failure(AuthError.ValidationFailure);
+        {
+            var errors = validationResult.Errors.Select(x => x.ErrorMessage);
+            return Result.Failure(AuthError.InvalidRequest(errors));
+        }
 
         if (await userRepository.UserExistsAsync(request.Email))
             return Result.Failure(AuthError.UserAlreadyExists);
