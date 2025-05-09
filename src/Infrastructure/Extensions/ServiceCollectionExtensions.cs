@@ -18,6 +18,7 @@ namespace Infrastructure.Extensions
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserRoleRepository, UserRoleRepository>();
+            services.AddScoped<IMovementRepository, MovementRepository>();
 
             return services;
         }
