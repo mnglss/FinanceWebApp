@@ -9,4 +9,8 @@
     <Project Path="tests/Application.FunctionalTest/Application.FunctionalTest.csproj" />
     <Project Path="tests/Application.UnitTest/Application.UnitTest.csproj" />
   </Folder>
+  <Project Path="src/Web/Web.esproj">
+    <Build />
+    <Deploy />
+  </Project>
 </Solution>
