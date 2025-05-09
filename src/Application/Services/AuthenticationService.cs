@@ -67,6 +67,7 @@ public class AuthenticationService(
             LastName = request.LastName,
             Email = request.Email,
             Password = HashPassword(request.Password),
+            UserRoles = [new UserRole { RoleId = 4}]
         };
         await userRepository.AddAsync(user);
         await unitOfWork.CommitAsync();
