@@ -24,7 +24,7 @@ namespace Application.Services
                     return Result.Failure<string>(UserError.UserAlreadyHasRole);
 
                 var result = await userRoleRepository.AddAsync(roleRequest.userId, roleRequest.roleId);
-                    
+
                 return result ? Result.Success("Role assigned successfully!") : Result.Failure<string>(UserError.InternalServerError("Failed to assign role"));
             }
             catch (Exception ex)
@@ -35,7 +35,7 @@ namespace Application.Services
 
         public async Task<Result<string>> DeleteAsync(int id)
         {
-            try 
+            try
             {
                 var user = await userRepository.GetByIdAsync(id);
                 if (user is null)
@@ -64,7 +64,7 @@ namespace Application.Services
                     .Select(x => new UserDto(x.Id, x.FirstName, x.LastName, x.Email, x.CreatedAt, x.UpdatedAt, x.UserRoles != null ? x.UserRoles.Select(x => x.Role!.Name).ToList() : []))
                     .ToList();
                 pagedResult = new PagedResult<UserDto>
-                { 
+                {
                     Items = pagedItems,
                     TotalCount = totalUsers,
                     PageNumber = pageNumber,
@@ -91,6 +91,24 @@ namespace Application.Services
             catch (Exception ex)
             {
                 return Result.Failure<UserDto>(UserError.InternalServerError(ex.Message));
+            }
+        }
+
+        public async Task<Result<string>> RemoveRoleAsync(RemoveRoleRequest roleRequest)
+        {
+            try
+            {
+                var userHasRole = await userRoleRepository.HasRoleAsync(roleRequest.userId, roleRequest.roleId);
+                if (!userHasRole)
+                    return Result.Failure<string>(UserError.UserHaveNotRole);
+
+                var result = await userRoleRepository.RemoveAsync(roleRequest.userId, roleRequest.roleId);
+
+                return result ? Result.Success("Role removed successfully!") : Result.Failure<string>(UserError.InternalServerError("Failed to remove role"));
+            }
+            catch (Exception ex)
+            {
+                return Result.Failure<string>(UserError.InternalServerError(ex.Message));
             }
         }
 

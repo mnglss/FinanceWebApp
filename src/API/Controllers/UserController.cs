@@ -44,5 +44,11 @@ namespace FinanceWebApp.API.Controllers
             var response = await userService.AssignRoleAsync(roleRequest);
             return response.ToHttpResponse();
         }
-    }
+
+        [HttpDelete("remove-role")]
+        public async Task<IResult> RemoveRole([FromBody] RemoveRoleRequest roleRequest)
+        {
+            var response = await userService.RemoveRoleAsync(roleRequest);
+            return response.ToHttpResponse();
+        }
 }

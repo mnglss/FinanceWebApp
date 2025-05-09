@@ -10,6 +10,8 @@ namespace Application.Errors
 
         public static Error UserAlreadyHasRole => Error.BadRequest("User already has this role.");
 
+        public static Error UserHaveNotRole => Error.BadRequest("User does not have this role.");
+
         public static Error InternalServerError(string message) => Error.InternalServerError(message);
 
         public static Error InvalidRequest(IEnumerable<string> errors) => Error.ValidationError(string.Join(" ", errors));

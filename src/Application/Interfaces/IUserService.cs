@@ -11,6 +11,6 @@ namespace Application.Interfaces
         Task<Result<string>> DeleteAsync(int id);
         Task<Result<UserDto>> GetByIdAsync(int id);
         Task<Result<string>> AssignRoleAsync(AssignRoleRequest roleRequest);
-
+        Task<Result<string>> RemoveRoleAsync(RemoveRoleRequest roleRequest);
     }
 }
