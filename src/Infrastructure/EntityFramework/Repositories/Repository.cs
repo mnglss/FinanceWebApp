@@ -15,12 +15,12 @@ namespace Infrastructure.EntityFramework.Repositories
             return add.Entity;
         }
 
-        public void DeleteAsync(TEntity entity)
+        public void Delete(TEntity entity)
         {
             _dbSet.Remove(entity);
         }
 
-        public async Task<List<TEntity>> GetAllAsync()
+        public async Task<IReadOnlyList<TEntity>> GetAllAsync()
         {
             return await _dbSet.ToListAsync();
         }

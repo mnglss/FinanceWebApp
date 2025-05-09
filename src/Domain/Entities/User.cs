@@ -12,5 +12,7 @@ namespace Domain.Entities
 
         public List<Movement>? Movements { get; set; }
         public List<UserRole>? UserRoles { get; set; }
+
+
     }
 }

@@ -10,7 +10,7 @@ namespace Application.Extensions
         {
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IJWTService, JWTService>();
-
+            services.AddScoped<IUserService, UserService>();
             return services;
         }
     }
