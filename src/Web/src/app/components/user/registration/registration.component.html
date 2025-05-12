@@ -1,0 +1,53 @@
+<div class="container">
+  <div class="row vh-100 align-items-center">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Inserisci i dati richiesti per registrarti</h4>
+          <p class="card-text">Hai già un account? <a routerLink="/login">Accedi</a></p>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+              <div class="row">
+                <div class="col-6">
+                  <label for="firstname" class="form-label">Nome</label>
+                  <input type="text" id="firstName" formControlName="firstName" class="form-control" />
+                  <p class="danger" *ngIf="!registrationForm.get('firstName')?.valid && registrationForm.get('firstName')?.touched">Obbligatorio!</p>
+                </div>
+                <div class="col-6">
+                  <label for="lastname" class="form-label">Cognome</label>
+                  <input type="text" id="lastName" formControlName="lastName" class="form-control" />
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" id="email" formControlName="email" class="form-control" />
+            </div>
+            <div class="mb-3">
+              <div class="row">
+                <div class="col-6">
+                  <label for="password" class="form-label">Password</label>
+                  <input type="password" id="password" formControlName="password" class="form-control" />
+                </div>
+                <div class="col-6">
+                  <label for="confirmPassword" class="form-label">Conferma Password</label>
+                  <input type="password" id="confirmPassword" formControlName="confirmPassword" class="form-control" />
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <div class="align-items-center">
+                <label for="accetpTerms" class="form-label">
+                <input type="checkbox" id="accetpTerms" formControlName="accetpTerms" /> Accetto i termini e le condizioni</label>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary" [disabled]="!registrationForm.valid">Registrati</button>
+          </form>
+          <!-- <p *ngIf="errorMessage">{{ errorMessage }}</p> -->
+        </div>
+        <div class="card-footer">
+          <p class="card-text">Password dimenticata? <a routerLink="/login">Recupera password</a></p>
+      </div>
+  </div>
+</div>

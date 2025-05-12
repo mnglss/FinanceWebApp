@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="row vh-100 align-items-center">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Inserisci i dati richiesti per accedere</h4>
+        <p class="card-text">Non hai un account? <a routerLink="/registration">Registrati</a></p>
+      </div>
+      <div class="card-body">
+        <form #form="ngForm" (ngSubmit)="onSubmit(form.value)" class="mx-1 mx-md-4">
+          <div class="">
+
+            <div class="form-group">
+              <label for="email" class="form-label"><i class="pi pi-envelope"></i> Email</label><br />
+              <input pInputText pSize="large" type="text" name="email" id="email" class="" placeholder="" ngModel />
+            </div>
+
+            <br />
+
+            <div class="form-group">
+              <label for="password" class="form-label"><i class="pi pi-asterisk"></i> Password</label><br />
+              <p-password type="text" name="password" id="password" class="" placeholder="" ngModel [toggleMask]="true" [feedback]="false"></p-password>
+            </div>
+
+            <br />
+
+            <button type="submit" class="btn btn-primary btn-block mb-4">Accedi</button>
+          </div>
+        </form>
+        <p class="alert" *ngIf="errorMessage">{{ errorMessage }}</p>
+      </div>
+      <div class="card-footer">
+        <p class="card-text">Password dimenticata? <a routerLink="/passwordrecovery">Recupera password</a></p>
+      </div>
+    </div>
+  </div>
+</div>

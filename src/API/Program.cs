@@ -19,7 +19,16 @@ builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddAPIService(builder.Configuration);
 
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "FinanceWebApp",
+                      policy =>
+                      {
+                          policy.AllowAnyOrigin();
+                          policy.AllowAnyHeader();
+                          policy.AllowAnyMethod();
+                      });
+});
 
 var app = builder.Build();
 
@@ -38,7 +47,7 @@ if (app.Environment.IsDevelopment())
     });
     app.MapScalarApiReference();
 }
-
+app.UseCors("FinanceWebApp");
 app.UseHttpsRedirection();
 app.MapControllers();
 

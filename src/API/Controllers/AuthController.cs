@@ -1,3 +1,4 @@
+using API.Controllers.Request;
 using API.Extensions;
 using Application.Interfaces;
 using Application.Models;
@@ -18,8 +19,9 @@ namespace API.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IResult> Login([FromBody, Required] LoginRequest loginRequest)
+        public async Task<IResult> Login([FromBody, Required] CredentialsRequest request)
         {
+            var loginRequest = new LoginRequest(request.Credentials.Email, request.Credentials.Password);
             var response = await authService.LoginAsync(loginRequest);
 
             return response.ToHttpResponse();
