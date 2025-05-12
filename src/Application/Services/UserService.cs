@@ -78,6 +78,22 @@ namespace Application.Services
             }
         }
 
+        public async Task<Result<UserDto>> GetByEmailAsync(string email)
+        {
+            try
+            {
+                var user = await userRepository.GetByEmailAsync(email);
+                if (user is null)
+                    return Result.Failure<UserDto>(UserError.UserNotFound);
+                var userDto = new UserDto(user.Id, user.FirstName, user.LastName, user.Email, user.CreatedAt, user.UpdatedAt, user.UserRoles != null ? user.UserRoles.Select(x => x.Role!.Name).ToList() : []);
+                return Result.Success(userDto);
+            }
+            catch (Exception ex)
+            {
+                return Result.Failure<UserDto>(UserError.InternalServerError(ex.Message));
+            }
+        }
+
         public async Task<Result<UserDto>> GetByIdAsync(int id)
         {
             try
@@ -125,7 +141,7 @@ namespace Application.Services
                 var user = await userRepository.GetByIdAsync(userUpdateRequest.Id);
                 if (user is null)
                     return Result.Failure<string>(UserError.UserNotFound);
-                if (user.Email != userUpdateRequest.Email && await userRepository.UserExistsAsync(userUpdateRequest.Email))
+                if (user.Email != userUpdateRequest.Email && await userRepository.ExistsAsync(userUpdateRequest.Email))
                     return Result.Failure<string>(UserError.UserEmailAlreadyExists);
                 user.UpdateWithModel(userUpdateRequest);
                 userRepository.Update(user);

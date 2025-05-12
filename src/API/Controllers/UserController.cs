@@ -1,7 +1,9 @@
 using API.Extensions;
 using Application.Interfaces;
 using Application.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace FinanceWebApp.API.Controllers
 {
@@ -17,10 +19,19 @@ namespace FinanceWebApp.API.Controllers
             return response.ToHttpResponse();
         }
 
-        [HttpGet("{id}")]
+        //[Authorize]
+        [HttpGet("ById/{id:int}")]
         public async Task<IResult> GetUserById(int id)
         {
             var response = await userService.GetByIdAsync(id);
+            return response.ToHttpResponse();
+        }
+
+        //[Authorize]
+        [HttpGet("ByEmail")]
+        public async Task<IResult> GetUserByEmail([FromQuery, Required] string email)
+        {
+            var response = await userService.GetByEmailAsync(email);
             return response.ToHttpResponse();
         }
 

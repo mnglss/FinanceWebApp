@@ -4,7 +4,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { providePrimeNG } from 'primeng/config';
 import Material from '@primeng/themes/material';
 import { routes } from './app.routes';
-import { HttpClient, provideHttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { authKeyInterceptor } from './interceptors/auth-key.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -14,6 +15,10 @@ export const appConfig: ApplicationConfig = {
     providePrimeNG({
       theme:{ preset: Material}
     }),
-    provideHttpClient(),
+    provideHttpClient(withInterceptorsFromDi()),{
+      provide: HTTP_INTERCEPTORS,
+      useClass: authKeyInterceptor,
+      multi: true
+    }
   ]
 };

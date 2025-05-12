@@ -25,7 +25,8 @@ export class AuthService {
     };
     return this.httpClient.post<any>(`${this.apiUrl}/login`, { credentials });
   }
-saveUserData(res: any): void {
+
+  saveUserData(res: any): void {
     const userData = {
       name: res.name,
       email: res.email,

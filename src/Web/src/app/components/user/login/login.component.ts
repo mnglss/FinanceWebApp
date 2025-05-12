@@ -4,7 +4,7 @@ import { AuthService } from '../../../services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +17,7 @@ export class LoginComponent {
   user: any;
 
   constructor(
-    // private router: Router,
+    private router: Router,
     private authService: AuthService) {
   }
 
@@ -29,6 +29,7 @@ export class LoginComponent {
           next: (res) => {
             this.user = res; // Salva i dati dell'utente
             this.errorMessage = res.value.result;
+            localStorage.setItem('auth-key', res.value.result); // Salva il token nel localStorage
 
             if (res) {
               // this.authService.saveUserData(res); // Salva i dati dell'utente nel localStorage
@@ -39,7 +40,7 @@ export class LoginComponent {
               //   life: 3000 // Durata del messaggio in millisecondi
               //  }); // Mostra il messaggio di successo
 
-              //this.router.navigate(['/home']); // Reindirizza alla home page dopo il login
+              this.router.navigate(['/dashboard']);
             }
           },
           error: (err) => {

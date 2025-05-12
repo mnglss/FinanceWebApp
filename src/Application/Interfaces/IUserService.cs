@@ -12,5 +12,6 @@ namespace Application.Interfaces
         Task<Result<UserDto>> GetByIdAsync(int id);
         Task<Result<string>> AssignRoleAsync(AssignRoleRequest roleRequest);
         Task<Result<string>> RemoveRoleAsync(RemoveRoleRequest roleRequest);
+        Task<Result<UserDto>> GetByEmailAsync(string email);
     }
 }

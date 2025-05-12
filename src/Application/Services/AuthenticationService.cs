@@ -32,7 +32,7 @@ public class AuthenticationService(
         }
 
         var (email, password) = request;
-        var user = await userRepository.GetUserByEmailAsync(email);
+        var user = await userRepository.GetByEmailAsync(email);
         if (user is null)
             return Result.Failure(AuthError.UserNotFound);
         
@@ -58,7 +58,7 @@ public class AuthenticationService(
             return Result.Failure(AuthError.InvalidRequest(errors));
         }
 
-        if (await userRepository.UserExistsAsync(request.Email))
+        if (await userRepository.ExistsAsync(request.Email))
             return Result.Failure(AuthError.UserAlreadyExists);
 
         var user = new User

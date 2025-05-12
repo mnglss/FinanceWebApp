@@ -5,19 +5,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.EntityFramework.Repositories;
 
-public class UserRepository(AppDbContext _contex) : Repository<User>(_contex), IUserRepository
+public class UserRepository(AppDbContext context) : Repository<User>(context), IUserRepository
 {
-    public async Task<User?> GetUserByEmailAsync(string email)
+
+    public async Task<User?> GetByEmailAsync(string email)
     {
-        return await _contex.Users
+        var userData = await context.Users
             .Include(x => x.UserRoles!)
             .ThenInclude(x => x.Role)
             .FirstOrDefaultAsync(x => x.Email == email);
+        return userData;
     }
 
     public async Task<List<string>> GetUserRoleByEmailAsync(string email)
     {
-        var userRoles = await _contex.Users
+        var userRoles = await context.Users
             .Where(u => u.Email == email)
             .SelectMany(u => u.UserRoles!)
             .Select(x => x.Role!.Name)
@@ -27,8 +29,8 @@ public class UserRepository(AppDbContext _contex) : Repository<User>(_contex), I
         return userRoles;
     }
 
-    public async Task<bool> UserExistsAsync(string email)
+    public async Task<bool> ExistsAsync(string email)
     {
-        return await _contex.Users.FirstOrDefaultAsync(x => x.Email == email) is not null ? true : false;
+        return await context.Users.FirstOrDefaultAsync(x => x.Email == email) is not null ? true : false;
     }
 }
