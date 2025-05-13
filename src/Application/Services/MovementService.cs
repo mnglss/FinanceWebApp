@@ -45,5 +45,21 @@ namespace Application.Services
                 return Result.Failure<string>(MovementError.InternalServerError(ex.Message));
             }
         }
+
+        public async Task<Result<List<Movement>>?> GetByUserIdAsync(MovementByUserIdRequest request)
+        {
+            var empty = Enumerable.Empty<Movement>();
+            try
+            {
+                var movements = await movementRepository.GetByUserIdAsync(request.userId, request.year, request.month);
+                if (movements == null || movements.Count == 0)
+                    return Result.Success<List<Movement>>([.. empty]);
+                return Result.Success(movements);
+            }
+            catch (Exception ex)
+            {
+                return Result.Failure<List<Movement>>(MovementError.InternalServerError(ex.Message));
+            }
+        }
     }
 }
