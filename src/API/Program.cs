@@ -30,6 +30,8 @@ builder.Services.AddCors(options =>
                       });
 });
 
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -67,4 +69,11 @@ public class LowerCaseDocumentFilter : IDocumentFilter
             swaggerDoc.Paths.Add(path.Key, path.Value);
         }
     }
+}
+
+public class FinanceAppRoles()
+{
+    public const string PowerAdmin = "PowerAdmin";
+    public const string Admin = "Admin";
+    public const string User = "User";
 }

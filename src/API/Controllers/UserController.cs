@@ -3,14 +3,14 @@ using Application.Interfaces;
 using Application.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 
 namespace FinanceWebApp.API.Controllers
 {
     public class UserController(IUserService userService) : BaseApiController
     {
-        //[Authorize]
         [HttpGet()]
+        [Authorize(Roles = FinanceAppRoles.Admin)]
         public async Task<IResult> GetAllUsers([FromQuery] string? search, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
         {
             var response = await userService.GetAllAsync(search, pageNumber, pageSize);
@@ -19,19 +19,29 @@ namespace FinanceWebApp.API.Controllers
             return response.ToHttpResponse();
         }
 
-        //[Authorize]
         [HttpGet("ById/{id:int}")]
+        [Authorize(Roles = FinanceAppRoles.PowerAdmin)]
         public async Task<IResult> GetUserById(int id)
         {
             var response = await userService.GetByIdAsync(id);
             return response.ToHttpResponse();
         }
 
-        //[Authorize]
-        [HttpGet("ByEmail")]
-        public async Task<IResult> GetUserByEmail([FromQuery, Required] string email)
+        [HttpGet("ByEmail/{email}")]
+        [Authorize(Roles = FinanceAppRoles.PowerAdmin)]
+        //public async Task<IResult> GetUserByEmail([FromQuery, Required] string email)
+        public async Task<IResult> GetUserByEmail(string email)
         {
             var response = await userService.GetByEmailAsync(email);
+            return response.ToHttpResponse();
+        }
+
+        [HttpGet("UserData")]
+        [Authorize(Roles = $"{FinanceAppRoles.PowerAdmin},{FinanceAppRoles.Admin},{FinanceAppRoles.User}")]
+        public async Task<IResult> GetUserData()
+        {
+            var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+            var response = await userService.GetByEmailAsync(email!);
             return response.ToHttpResponse();
         }
 

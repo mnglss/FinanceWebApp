@@ -40,6 +40,7 @@ namespace API.Extensions
                 });
             });
 
+            services.AddAuthorization();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {

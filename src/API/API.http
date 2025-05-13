@@ -13,4 +13,6 @@ Content-Type: application/json
 
 ###
 
+@AccessToken = ''
 GET {{API_HostAddress}}/User
+Authorization: Bearer {{AccessToken}}
