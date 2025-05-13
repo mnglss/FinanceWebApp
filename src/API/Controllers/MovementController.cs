@@ -24,9 +24,9 @@ namespace API.Controllers
         public async Task<IResult> GetMovements([FromBody, Required] MovementUserRequest movementUserRequest)
         {
             var request = new MovementByUserIdRequest(
-                movementUserRequest.MovementByUserIdDto.UserId, 
-                movementUserRequest.MovementByUserIdDto.Year, 
-                movementUserRequest.MovementByUserIdDto.Month
+                movementUserRequest.UserId, 
+                movementUserRequest.Year, 
+                movementUserRequest.Month
                 );
             var response = await movementService.GetByUserIdAsync(request);
             return response.ToHttpResponse();
