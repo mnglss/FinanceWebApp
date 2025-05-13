@@ -1,12 +1,12 @@
 <div class="container">
   <div class="row vh-100 align-items-center">
-    <div class="card">
+    <div class="card" style="width: 50%;">
       <div class="card-header">
         <h4 class="card-title">Inserisci i dati richiesti per accedere</h4>
         <p class="card-text">Non hai un account? <a routerLink="/registration">Registrati</a></p>
       </div>
       <div class="card-body">
-        <form #form="ngForm" (ngSubmit)="onSubmit(form.value)" class="mx-1 mx-md-4">
+         <form #form="ngForm" (ngSubmit)="onSubmit(form.value)" class="mx-1 mx-md-4">
           <div class="">
 
             <div class="form-group">
@@ -23,7 +23,7 @@
 
             <br />
 
-            <button type="submit" class="btn btn-primary btn-block mb-4">Accedi</button>
+            <button type="submit" class="btn btn-primary btn-block mb-4" [disabled]="!form.valid">Accedi</button>
           </div>
         </form>
         <p class="alert" *ngIf="errorMessage">{{ errorMessage }}</p>
@@ -34,3 +34,4 @@
     </div>
   </div>
 </div>
+<!-- <p-toast position="center"></p-toast> -->

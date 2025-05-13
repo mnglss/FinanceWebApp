@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { UserService } from './user.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,7 @@ export class AuthService {
 
   constructor(
     private httpClient: HttpClient,
-    private userService: UserService
+    private router: Router
   ) { }
 
   login(email: string, password: string): Observable<any> {
@@ -27,25 +27,29 @@ export class AuthService {
   }
 
   saveUserData(res: any): void {
-    const userData = {
-      name: res.name,
-      email: res.email,
-      password: res.password
-    }
+    // const userData = {
+    //   name: res.name,
+    //   email: res.email,
+    //   password: res.password
+    // }
     //this.userService.userRole.next(res.role);
 
-    localStorage.setItem('userData', JSON.stringify(userData));
+    sessionStorage.setItem('userData', JSON.stringify(res));
   }
 
-  // isLogged(): boolean {
-  //   const userData = localStorage.getItem('userData');
-  //   //const u = JSON.parse(userData); // per leggere i dati
-  //   return userData !== null;
-  // }
+  readUserData(): any {
+    const userData = sessionStorage.getItem('userData');
+    return userData ? JSON.parse(userData) : null;
+  }
 
-  // logout(): void {
-  //   localStorage.removeItem('userData');
-  //   this.userService.userRole.next('');
-  // }
+  isLogged(): boolean {
+    const userData = sessionStorage.getItem('userData');
+    return userData !== null;
+  }
+
+  logout(): void {
+    sessionStorage.clear();
+    this.router.navigate(['/home']);
+  }
 
 }

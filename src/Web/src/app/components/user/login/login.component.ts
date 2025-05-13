@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
 import { Router, RouterLink } from '@angular/router';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -14,25 +15,26 @@ import { Router, RouterLink } from '@angular/router';
 })
 export class LoginComponent {
   errorMessage: string = ''; // Messaggio di errore per il login
-  user: any;
+  //user: any;
 
   constructor(
     private router: Router,
-    private authService: AuthService) {
-  }
+    private authService: AuthService,
+    private userService: UserService
+  ) { }
+
 
   onSubmit(cred: any) {
-    // Simulazione di un errore di login
     if (cred.email !== '' || cred.password !== '') {
       this.authService.login(cred.email, cred.password).subscribe(
         {
           next: (res) => {
-            this.user = res; // Salva i dati dell'utente
+            //this.user = res; // Salva i dati dell'utente
             this.errorMessage = res.value.result;
-            localStorage.setItem('auth-key', res.value.result); // Salva il token nel localStorage
+            sessionStorage.setItem('auth-key', res.value.result); // Salva il token nel localStorage
 
             if (res) {
-              // this.authService.saveUserData(res); // Salva i dati dell'utente nel localStorage
+
               // this.messageService.add({
               //   severity: 'success',
               //   summary: 'Login',
@@ -40,7 +42,16 @@ export class LoginComponent {
               //   life: 3000 // Durata del messaggio in millisecondi
               //  }); // Mostra il messaggio di successo
 
-              this.router.navigate(['/dashboard']);
+              this.userService.getUserData().subscribe({
+                next: (data) => {
+                  console.log('User data:', data.value); // Mostra i dati dell'utente nella console
+                  this.authService.saveUserData(data.value); // Salva i dati dell'utente nel localStorage
+                  this.router.navigate(['/dashboard']);
+                },
+                error: (error) => {
+                  console.error('Error fetching user data:', error); // Mostra l'errore nella console
+                }
+              });
             }
           },
           error: (err) => {
@@ -54,6 +65,6 @@ export class LoginComponent {
             console.log(err.error.message); // Mostra il messaggio di errore nella console
           }
         });
-        }
+      }
   }
 }
