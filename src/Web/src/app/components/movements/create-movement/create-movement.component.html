@@ -1,0 +1,53 @@
+<div class="container-fluid">
+  <div class="container">
+    <div class="row vh-80 align-items-center">
+      <div class="col-xxl-4 offset-xxl-4 col-lg-8 offset-lg-5 col-10 offset-1">
+        <div class="rounded-4 border-0 shadow-lg bg-white" style="min-height: 450px;">
+          <div class="d-flex justify-content-start align-items-center">
+            <div class="p-5">
+              <h4>Nuovo Movimento</h4>
+              <form [formGroup]="newMovementForm" (ngSubmit)="onSubmit()">
+                <div class="mb-3">
+                  <div class="row">
+                    <div class="col-6">
+                      <label for="year" class="form-label">Anno</label>
+                       <!-- <p-datepicker formControlName="year" view="year" dateFormat="yy" size="small" /> -->
+                       <input type="date" id="year" formControlName="year" class="form-control" />
+                    </div>
+                    <div class="col-6">
+                      <label for="month" class="form-label">Mese</label>
+                       <p-datepicker formControlName="month" view="month" dateFormat="mm" size="small" />
+                      <p class="danger" *ngIf="!newMovementForm.get('month')?.valid && newMovementForm.get('month')?.touched">Obbligatorio!</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="category" class="form-label">Categoria</label>
+                  <input type="text" id="category" formControlName="category" class="form-control" />
+                </div>
+                <div class="mb-3">
+                  <label for="description" class="form-label">Descrizione</label>
+                  <input type="text" id="description" formControlName="description" class="form-control" />
+                </div>
+                <div class="mb-3">
+                  <div class="row">
+                    <div class="col-6">
+                      <label for="date" class="form-label">Data</label>
+                      <p-datepicker dateFormat="dd/mm/yy" formControlName="date" [iconDisplay]="'input'" [showIcon]="true" inputId="icondisplay" size="small"/>
+                    </div>
+                    <div class="col-6">
+                      <label for="amount" class="form-label">Importo</label>
+                      <input type="number" id="amount" formControlName="amount" class="form-control" />
+                    </div>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary" [disabled]="!newMovementForm.valid">Salva</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<p>Data: {{this.newMovementForm.get('date')?.value | date:'shortDate'}}</p>
