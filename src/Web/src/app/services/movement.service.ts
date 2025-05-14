@@ -14,13 +14,13 @@ export class MovementService {
     private authService: AuthService
   ) { }
 
-  getMovements(): Observable<any[]> {
+  getMovements(years: number[], months: number[]): Observable<any[]> {
     const userData = this.authService.readUserData();
     //const userId = userData ? userData.id : null; // Ottieni l'ID dell'utente dal localStorage
     const movementByUserIdDto = {
       userId: userData.idUser,
-      year: [2025],
-      month: [5],
+      year: years,
+      month: months,
     }
     return this.httpClient.post<any[]>(`${this.apiUrl}/ByUserId`, movementByUserIdDto); // Modifica l'URL in base alla tua APIe
 
