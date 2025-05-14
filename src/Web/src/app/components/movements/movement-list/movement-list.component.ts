@@ -6,6 +6,11 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { FormsModule } from '@angular/forms';
 import { FloatLabelModule } from 'primeng/floatlabel';
 
+interface Month {
+    name: string,
+    code: string
+}
+
 @Component({
   selector: 'app-movement-list',
   imports: [NgFor, DatePipe, CurrencyPipe, MultiSelectModule, FormsModule, FloatLabelModule],
@@ -13,9 +18,23 @@ import { FloatLabelModule } from 'primeng/floatlabel';
   styleUrl: './movement-list.component.css'
 })
 export class MovementListComponent implements OnInit {
+
   yearsList: number[] = [2024, 2025]; // Crea un'istanza dell'array di anni
   selectedYears: number[] = [2025]; // Crea un'istanza dell'anno selezionato
-  monthsList: number[] = [1,2,3,4,5,6,7,8,9,10,11,12]; // Crea un'istanza dell'array di mesi
+  monthsList: Month[] = [
+    {name:'Gennaio', code:'1'},
+    {name:'Febbraio', code:'2'},
+    {name:'Marzo', code:'3'},
+    {name:'Aprile', code:'4'},
+    {name:'Maggio', code:'5'},
+    {name:'Giugno', code:'6'},
+    {name:'Luglio', code:'7'},
+    {name:'Agosto', code:'8'},
+    {name:'Settembre', code:'9'},
+    {name:'Ottobre', code:'10'},
+    {name:'Novembre', code:'11'},
+    {name:'Dicembre', code:'12'},
+  ]; // Crea un'istanza dell'array di mesi
   selectedMonths: number[] = [5]; // Crea un'istanza del mese selezionato
   movements: any[] = []; // Crea un'istanza dell'array di movimenti
   constructor(

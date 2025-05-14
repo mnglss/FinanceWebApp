@@ -1,44 +1,43 @@
-<h6>Lista Movimenti</h6>
-<div class="row">
-  <div class="col-5">
-    <!-- <div class="card flex justify-center"> -->
+<div class="container-fluid">
+  <h4>Lista Movimenti</h4>
+  <div class="row">
+    <div class="col-5">
       <p-floatLabel class="w-full md:w-80" variant="in">
         <p-multiselect id="yearsList-label" [options]="yearsList" [(ngModel)]="selectedYears" [showClear]="true" class="multiSelect" />
         <label for="yearsList-label">Anno</label>
       </p-floatLabel>
-    <!-- </div> -->
-  </div>
-  <div class="col-5">
-    <div class="card flex justify-center">
+    </div>
+    <div class="col-5">
       <p-floatLabel class="" variant="in">
-        <p-multiselect id="monthsList-label" [options]="monthsList" [(ngModel)]="selectedMonths" [showClear]="true" class="multiSelect" />
+        <p-multiselect id="monthsList-label" [options]="monthsList" optionLabel="name" optionValue="code" [(ngModel)]="selectedMonths" [showClear]="true" class="multiSelect" />
         <label for="monthsList-label">Mese</label>
       </p-floatLabel>
     </div>
-  </div>
-  <div class="col-2">
-    <button type="button" class="btn btn-primary" (click)="onPeriodsChanged()">Aggiorna Dati</button>
-
+    <div class="col-2">
+      <button type="button" class="btn btn-primary" (click)="onPeriodsChanged()">Aggiorna Dati</button>
+    </div>
+  </div><br />
+  <div class="row">
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>Data</th>
+            <th>Tipo</th>
+            <th>Descrizione</th>
+            <th>Importo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- ngFor directive to iterate over movements -->
+          <tr *ngFor="let item of movements; let index = index">
+            <td>{{ item.date | date: 'dd/MM/yyyy' }}</td>
+            <td>{{ item.category }}</td>
+            <td>{{ item.description }}</td>
+            <td>{{ item.amount | currency: 'EUR' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
-<div class="table-responsive">
-  <table class="table table-striped table-bordered table-hover">
-    <thead>
-      <tr>
-        <th>Data</th>
-        <th>Tipo</th>
-        <th>Descrizione</th>
-        <th>Importo</th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- ngFor directive to iterate over movements -->
-      <tr *ngFor="let item of movements; let index = index">
-        <td>{{ item.date | date: 'dd/MM/yyyy' }}</td>
-        <td>{{ item.category }}</td>
-        <td>{{ item.description }}</td>
-        <td>{{ item.amount | currency: 'EUR' }}</td>
-      </tr>
-    </tbody>
-  </table>
-@for (item of movements; track $index) {}
