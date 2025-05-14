@@ -21,7 +21,7 @@ export class NavbarComponent implements DoCheck {
   ngDoCheck(): void {
     this.isLogged = this.authService.isLogged();
     const usarData = this.authService.readUserData(); // Legge i dati dell'utente dal localStorage
-    console.log('User data:', usarData); // Mostra i dati dell'utente nella console
+    //console.log('User data:', usarData); // Mostra i dati dell'utente nella console
     if (usarData) {
       const userDataString = JSON.stringify(usarData);
      const userJson = JSON.parse(userDataString); // Converte la stringa JSON in un oggetto
@@ -29,7 +29,7 @@ export class NavbarComponent implements DoCheck {
         name: userJson.firstName,
         email: userJson.email
       };
-      console.log('User:', this.user); // Mostra i dati dell'utente nella console
+      //console.log('User:', this.user); // Mostra i dati dell'utente nella console
     }
   }
 

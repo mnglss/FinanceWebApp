@@ -5,6 +5,7 @@ import { RegistrationComponent } from './components/user/registration/registrati
 import { LoginComponent } from './components/user/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { MovementListComponent } from './components/movements/movement-list/movement-list.component';
+import { CreateMovementComponent } from './components/movements/create-movement/create-movement.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -13,5 +14,6 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'registration', component: RegistrationComponent },
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'movements', component: MovementListComponent }
+  { path: 'movements', component: MovementListComponent },
+  { path: 'createMovement', component: CreateMovementComponent }
 ];

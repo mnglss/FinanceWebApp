@@ -19,6 +19,7 @@
   </div><br />
   <div class="row">
     <div class="table-responsive">
+      <button type="button" class="btn btn-primary" (click)="onCreate()">Inserisci nuova operazione</button>
       <table class="table table-striped table-bordered table-hover">
         <thead>
           <tr>
@@ -26,6 +27,7 @@
             <th>Tipo</th>
             <th>Descrizione</th>
             <th>Importo</th>
+            <th>Azioni</th>
           </tr>
         </thead>
         <tbody>
@@ -35,6 +37,10 @@
             <td>{{ item.category }}</td>
             <td>{{ item.description }}</td>
             <td>{{ item.amount | currency: 'EUR' }}</td>
+            <td>
+              <button type="button" class="btn btn-primary" (click)="onEdit(item)" [disabled]="!canModify">Modifica</button>&nbsp;
+              <button type="button" class="btn btn-danger" (click)="onDelete(item)" [disabled]="!canDelete">Elimina</button>
+            </td>
           </tr>
         </tbody>
       </table>

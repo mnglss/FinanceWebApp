@@ -15,7 +15,7 @@ export class authKeyInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     const token = sessionStorage.getItem('auth-key'); // Recupera il token dal localStorage
-    console.log('Authenticaton Key: ', token); // Stampa il token nella console
+    //console.log('Authenticaton Key: ', token); // Stampa il token nella console
     if (token)
       req = req.clone({
         url: req.url,
