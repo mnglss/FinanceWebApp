@@ -12,6 +12,7 @@ namespace Application.Extensions
             services.AddScoped<IJWTService, JWTService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IMovementService, MovementService>();
+            services.AddScoped<IDashBoardService, DashBoardService>();
             return services;
         }
     }

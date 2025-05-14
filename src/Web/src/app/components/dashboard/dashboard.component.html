@@ -1,1 +1,62 @@
-<p>dashboard works!</p>
+<div class="container-fluid allign-text-center">
+  <h4>Dashboard</h4><div class="row">
+    <div class="col-5">
+      <p-floatLabel class="w-full md:w-80" variant="in">
+        <p-multiselect id="yearsList-label" [options]="yearsList" [(ngModel)]="selectedYears" [showClear]="true" class="multiSelect" />
+        <label for="yearsList-label">Anno</label>
+      </p-floatLabel>
+    </div>
+    <div class="col-5">
+      <p-floatLabel class="" variant="in">
+        <p-multiselect id="monthsList-label" [options]="monthsList" optionLabel="name" optionValue="code" [(ngModel)]="selectedMonths" [showClear]="true" class="multiSelect" />
+        <label for="monthsList-label">Mese</label>
+      </p-floatLabel>
+    </div>
+    <div class="col-2">
+      <button type="button" class="btn btn-primary" (click)="onPeriodsChanged()">Aggiorna Dati</button>
+    </div>
+  </div><br />
+  <div class="row">
+    <div class="col-6">
+      <div class="card">
+        <p-chart type="pie" [data]="basicData" [options]="basicOptions" />
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="card">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Descrizione</th>
+              <th>Totale</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Entrate</td><td>{{DashboardPieDataSource!.totalIncome | currency: 'EUR'}}</td>
+              <tr>
+              <td>Uscite</td><td>{{DashboardPieDataSource!.totalOutcome | currency: 'EUR'}}</td></tr>
+              <tr><td>Rimanenza</td><td>{{DashboardPieDataSource!.balance | currency: 'EUR'}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div><br />
+      <div class="card">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Descrizione</th>
+              <th>Totale</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of DashboardPieDataSource!.totalForCategory; let index = index">
+            <td>{{ item.category }}</td>
+            <td>{{ item.amount | currency: 'EUR'}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
