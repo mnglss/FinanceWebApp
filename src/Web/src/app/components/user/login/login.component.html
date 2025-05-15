@@ -1,37 +1,44 @@
 <div class="container">
   <div class="row vh-100 align-items-center">
-    <div class="card" style="width: 50%;">
-      <div class="card-header">
-        <h4 class="card-title">Inserisci i dati richiesti per accedere</h4>
-        <p class="card-text">Non hai un account? <a routerLink="/registration">Registrati</a></p>
-      </div>
-      <div class="card-body">
-         <form #form="ngForm" (ngSubmit)="onSubmit(form.value)" class="mx-1 mx-md-4">
-          <div class="">
-
-            <div class="form-group">
-              <label for="email" class="form-label"><i class="pi pi-envelope"></i> Email</label><br />
-              <input pInputText pSize="large" type="text" name="email" id="email" class="" placeholder="" ngModel />
+  <div class="col-xxl-4 offset-xxl-4 col-lg-6 offset-lg-3 col-10 offset-1">
+    <!-- <div class="rounded-4 border-0 shadow-lg bg-white" style="min-height: 450px;"> -->
+      <!-- <div class="d-flex justify-content-start align-items-center"> -->
+        <!-- <div class="p-5 w-100"> -->
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">Accedi</h4>
+              <p class="card-text">Non hai un account? <a routerLink="/registration">Registrati</a></p>
             </div>
-
-            <br />
-
-            <div class="form-group">
-              <label for="password" class="form-label"><i class="pi pi-asterisk"></i> Password</label><br />
-              <p-password type="text" name="password" id="password" class="" placeholder="" ngModel [toggleMask]="true" [feedback]="false"></p-password>
+            <div class="card-body">
+              <form #form="ngForm" (ngSubmit)="onSubmit(form.value)" class="" >
+                <div class="row">
+                  <div class="col-2"></div>
+                  <div class="col-10">
+                  <div class="form-group">
+                    <label for="email" class="form-label"><i class="pi pi-envelope"></i> Email</label><br />
+                    <input pInputText pSize="large" type="text" name="email" id="email" class="" placeholder="" ngModel />
+                    <p class="danger"></p>
+                  </div>
+                  <br />
+                  <div class="form-group">
+                    <label for="password" class="form-label"><i class="pi pi-asterisk"></i> Password</label><br />
+                    <p-password type="text" id="password" pSize="large" name="password" id="password" class="" placeholder="" ngModel [toggleMask]="true" [feedback]="false"></p-password>
+                  </div>
+                  <br />
+                  <button type="submit" class="btn btn-primary btn-block mb-4" [disabled]="!form.valid">Accedi</button>
+                  </div>
+                </div>
+              </form>
+              <p class="alert" *ngIf="errorMessage">{{ errorMessage }}</p>
             </div>
-
-            <br />
-
-            <button type="submit" class="btn btn-primary btn-block mb-4" [disabled]="!form.valid">Accedi</button>
+            <div class="card-footer">
+              <p class="card-text">Password dimenticata? <a routerLink="/passwordrecovery">Recupera password</a></p>
+            </div>
           </div>
-        </form>
-        <p class="alert" *ngIf="errorMessage">{{ errorMessage }}</p>
-      </div>
-      <div class="card-footer">
-        <p class="card-text">Password dimenticata? <a routerLink="/passwordrecovery">Recupera password</a></p>
-      </div>
-    </div>
+        <!-- </div> -->
+      <!-- </div> -->
+    <!-- </div> -->
+  </div>
   </div>
 </div>
 <!-- <p-toast position="center"></p-toast> -->

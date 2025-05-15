@@ -27,12 +27,12 @@ export class LoginComponent {
 
 
   onSubmit(cred: any) {
-    if (cred.email !== '' || cred.password !== '') {
+    if (cred.email !== '' && cred.password !== '') {
       this.authService.login(cred.email, cred.password).subscribe(
         {
           next: (res) => {
             sessionStorage.setItem('auth-key', res.value.result); // Salva il token nel localStorage
-            this.toastService.success('Successfully toasted!');
+            this.toastService.success('Successfully logged in !');
             if (res) {
 
               this.userService.getUserData().subscribe({
@@ -54,5 +54,7 @@ export class LoginComponent {
           }
         });
       }
+      else
+        this.toastService.warning('Inserire le credenziali !');
   }
 }
