@@ -3,10 +3,12 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormControl, F
 import { NgIf } from '@angular/common';
 import { CustomValidator } from './customvalidator';
 import { RouterLink } from '@angular/router';
+import { HotToastService } from '@ngxpert/hot-toast';
+import { PasswordModule } from 'primeng/password';
 
 @Component({
   selector: 'app-registration',
-  imports: [ReactiveFormsModule, NgIf, FormsModule, RouterLink],
+  imports: [ReactiveFormsModule, NgIf, FormsModule, RouterLink, PasswordModule],
   templateUrl: './registration.component.html',
   styleUrl: './registration.component.css'
 })
@@ -15,12 +17,15 @@ export class RegistrationComponent {
 
 
   registrationForm: FormGroup;
-  constructor(public formBuilder: FormBuilder) {
+  constructor(
+    public formBuilder: FormBuilder,
+    private toastService: HotToastService
+  ) {
     this.registrationForm = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6), Validators.pattern(this.regExPassword)]],
+      password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(16), Validators.pattern(this.regExPassword)]],
       confirmPassword: ['', [Validators.required]],
       accetpTerms: [false, Validators.requiredTrue]
     });
@@ -30,9 +35,10 @@ export class RegistrationComponent {
   onSubmit() {
     if (this.registrationForm.valid) {
       console.log('Form Submitted!', this.registrationForm.value);
-      // Perform registration logic here
+      // Perform registration logic
+      this.toastService.success('Utente registrato correttamente !');
     } else {
-      console.log('Form is invalid');
+      this.toastService.error('Errori di Validazione !');
     }
   }
 }

@@ -17,22 +17,29 @@
                 <div class="col-6">
                   <label for="lastname" class="form-label">Cognome</label>
                   <input type="text" id="lastName" formControlName="lastName" class="form-control" />
+                  <p class="danger" *ngIf="!registrationForm.get('lastName')?.valid && registrationForm.get('lastName')?.touched">Obbligatorio!</p>
                 </div>
               </div>
             </div>
             <div class="mb-3">
               <label for="email" class="form-label">Email</label>
               <input type="email" id="email" formControlName="email" class="form-control" />
+              <p class="danger" *ngIf="!registrationForm.get('email')?.valid && registrationForm.get('email')?.touched">Obbligatorio!</p>
             </div>
             <div class="mb-3">
               <div class="row">
                 <div class="col-6">
                   <label for="password" class="form-label">Password</label>
-                  <input type="password" id="password" formControlName="password" class="form-control" />
+                  <!-- <input type="password" id="password" formControlName="password" class="form-control" /> -->
+                  <p-password inputId="password" formControlName="password" size="small" [toggleMask]="true" />
+                  <p class="danger" *ngIf="!registrationForm.get('password')?.valid && registrationForm.get('password')?.touched">Obbligatorio!</p>
                 </div>
                 <div class="col-6">
                   <label for="confirmPassword" class="form-label">Conferma Password</label>
-                  <input type="password" id="confirmPassword" formControlName="confirmPassword" class="form-control" />
+                  <!-- <input type="password" id="confirmPassword" formControlName="confirmPassword"  class="form-control" /> -->
+                  <p-password formControlName="confirmPassword" size="small"  [toggleMask]="true" />
+                  <p class="danger" *ngIf="!registrationForm.get('confirmPassword')?.valid && registrationForm.get('confirmPassword')?.touched">Questo campo è obbligatorio!</p>
+                  <p class="danger" *ngIf="registrationForm.getError('noMatch') && registrationForm.get('confirmPassword')?.touched">Le password digitate non corrispondono!</p>
                 </div>
               </div>
             </div>
@@ -40,6 +47,8 @@
               <div class="align-items-center">
                 <label for="accetpTerms" class="form-label">
                 <input type="checkbox" id="accetpTerms" formControlName="accetpTerms" /> Accetto i termini e le condizioni</label>
+                <p class="danger" *ngIf="!registrationForm.get('accetpTerms')?.valid && registrationForm.get('accetpTerms')?.touched">Questo campo è obbligatorio!</p>
+
               </div>
             </div>
             <button type="submit" class="btn btn-primary" [disabled]="!registrationForm.valid">Registrati</button>
