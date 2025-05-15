@@ -27,6 +27,7 @@
               }
             ],
             "styles": [
+              "@ngxpert/hot-toast/styles.css",
               "./node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css"
             ],
@@ -89,6 +90,7 @@
               }
             ],
             "styles": [
+              "@ngxpert/hot-toast/styles.css",
               "./node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css"
             ],

@@ -8,6 +8,7 @@ import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withInterceptorsFromD
 import { authKeyInterceptor } from './interceptors/auth-key.interceptor';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
+import { provideHotToastConfig } from '@ngxpert/hot-toast';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -23,5 +24,6 @@ export const appConfig: ApplicationConfig = {
       useClass: authKeyInterceptor,
       multi: true
     },
+    provideHotToastConfig(),
   ]
 };
