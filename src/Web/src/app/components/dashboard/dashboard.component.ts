@@ -51,14 +51,31 @@ export class DashboardComponent implements OnInit {
     {name:'Ottobre', code:'10'},
     {name:'Novembre', code:'11'},
     {name:'Dicembre', code:'12'},
-  ]; // Crea un'istanza dell'array di mesi
-  selectedMonths: number[] = []; // Crea un'istanza del mese selezionato
-  DashboardPieDataSource: DashboardData | undefined; // Crea un'istanza dell'array dei movimenti
+  ];
+  selectedMonths = ['5'];
+  DashboardPieDataSource: DashboardData | any; // Crea un'istanza dell'array dei movimenti
   constructor(
     private authService: AuthService,
     private DashboardService: DashboardService,
     private cd: ChangeDetectorRef
-  ) {  }
+  ) {
+      this.DashboardPieDataSource = {
+        totalIncome: 0,
+        totalOutcome: 0,
+        balance: 0,
+        balancePercentage: 0,
+        totalForCategory: [
+          {
+            category: '',
+            amount: 0,
+            categoryPercentage: 0
+          }
+        ],
+        pieDataSource: [],
+        pieDataLabels: []
+      }
+
+    }
 
   basicData: any;
 
@@ -73,15 +90,18 @@ export class DashboardComponent implements OnInit {
       // Se l'utente non è loggato, reindirizza alla pagina di login
       window.location.href = '/login';
     }
-    this.getData(this.selectedYears, this.selectedMonths);
+    this.getData(this.selectedYears, this.convertMonthList(this.selectedMonths));
+    //this.getData(this.selectedYears, this.selectedMonths);
 
   }
 
     onPeriodsChanged(): void {
     console.log('Selected years:', this.selectedYears);
     console.log('Selected months:', this.selectedMonths);
-     if (this.selectedYears && this.selectedMonths)
-      this.getData(this.selectedYears, this.selectedMonths);
+     if (this.selectedYears && this.selectedMonths) {
+      this.getData(this.selectedYears, this.convertMonthList(this.selectedMonths));
+        //this.getData(this.selectedYears, this.selectedMonths);
+      }
     else {
        alert('Please select at least one year and one month.');
        this.DashboardPieDataSource = undefined; // Resetta l'array dei movimenti
@@ -161,5 +181,11 @@ export class DashboardComponent implements OnInit {
         }
     }
 
-
+    convertMonthList(monthsList: string[]): number[]{
+      const result: number[] = [];
+      for (const month of monthsList) {
+          result.push(parseInt(month));
+      }
+      return result;
+    }
 }

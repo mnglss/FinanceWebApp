@@ -11,12 +11,12 @@
                   <div class="row">
                     <div class="col-6">
                       <label for="year" class="form-label">Anno</label>
-                       <!-- <p-datepicker formControlName="year" view="year" dateFormat="yy" size="small" /> -->
-                       <input type="date" id="year" formControlName="year" class="form-control" />
+                       <p-datepicker formControlName="year" view="year" dateFormat="yy" size="small" />
+                       <!-- <input type="date" id="year" formControlName="year" class="form-control" /> -->
                     </div>
                     <div class="col-6">
                       <label for="month" class="form-label">Mese</label>
-                       <p-datepicker formControlName="month" view="month" dateFormat="mm" size="small" />
+                       <p-datepicker formControlName="month" view="month" dateFormat="m" size="small" />
                       <p class="danger" *ngIf="!newMovementForm.get('month')?.valid && newMovementForm.get('month')?.touched">Obbligatorio!</p>
                     </div>
                   </div>
@@ -50,4 +50,5 @@
     </div>
   </div>
 </div>
-<p>Data: {{this.newMovementForm.get('date')?.value | date:'shortDate'}}</p>
+<p>anno: {{newMovement.year}}</p>
+<p>mese: {{newMovement.month}}</p>

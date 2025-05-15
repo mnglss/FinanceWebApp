@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
+import { Movement } from '../models/movement';
 
 @Injectable({
   providedIn: 'root'
@@ -16,13 +17,18 @@ export class MovementService {
 
   getMovements(years: number[], months: number[]): Observable<any[]> {
     const userData = this.authService.readUserData();
-    //const userId = userData ? userData.id : null; // Ottieni l'ID dell'utente dal localStorage
     const movementByUserIdDto = {
       userId: userData.idUser,
       year: years,
       month: months,
     }
-    return this.httpClient.post<any[]>(`${this.apiUrl}/ByUserId`, movementByUserIdDto); // Modifica l'URL in base alla tua APIe
+    return this.httpClient.post<any[]>(`${this.apiUrl}/ByUserId`, movementByUserIdDto);
+  }
 
+  createMovement(newMovement: Movement): Observable<any> {
+
+      const userData = this.authService.readUserData();
+      newMovement.userId = userData.idUser;
+      return this.httpClient.post(`${this.apiUrl}`, newMovement);
   }
 }

@@ -7,9 +7,9 @@ namespace API.Validators
     {
         public MovementRequestValidator()
         {
-            RuleFor(x => x.id)
-                .NotEmpty().WithMessage("Id is required.")
-                .GreaterThanOrEqualTo(0).WithMessage("Id must be greater or equal to 0.");
+            //RuleFor(x => x.id)
+            //    .NotEmpty().WithMessage("Id is required.")
+            //    .GreaterThanOrEqualTo(0).WithMessage("Id must be greater or equal to 0.");
             RuleFor(x => x.year)
                 .NotEmpty().WithMessage("Year is required.")
                 .InclusiveBetween(2025, 2100).WithMessage("Year must be between 2025 and 2100.");
@@ -25,6 +25,8 @@ namespace API.Validators
                 .NotEmpty().WithMessage("Description is required.");
             RuleFor(x => x.category)
                 .NotEmpty().WithMessage("Category is required.");
+            RuleFor(x => x.userId)
+                .NotEmpty().WithMessage("User Id not valid.");
         }
     }
 }

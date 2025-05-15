@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col-5">
       <p-floatLabel class="w-full md:w-80" variant="in">
-        <p-multiselect id="yearsList-label" [options]="yearsList" [(ngModel)]="selectedYears" [showClear]="true" class="multiSelect" />
+        <p-multiselect id="yearsList-label" [options]="yearsList"  [(ngModel)]="selectedYears" [showClear]="true" class="multiSelect" />
         <label for="yearsList-label">Anno</label>
       </p-floatLabel>
     </div>
@@ -18,17 +18,17 @@
     </div>
   </div><br />
   <div class="row">
-    <div class="col-6">
+    <div class="col-5">
       <div class="card">
         <p-chart type="pie" [data]="basicData" [options]="basicOptions" />
       </div>
     </div>
-    <div class="col-6">
+    <div class="col-7">
       <div class="card">
         <table class="table table-bordered">
           <thead>
             <tr>
-              <th>Descrizione</th>
+              <th></th>
               <th>Totale</th>
             </tr>
           </thead>
@@ -46,7 +46,7 @@
         <table class="table table-bordered">
           <thead>
             <tr>
-              <th>Descrizione</th>
+              <th></th>
               <th>Totale</th>
             </tr>
           </thead>
