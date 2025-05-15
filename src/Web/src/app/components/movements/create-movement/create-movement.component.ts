@@ -1,23 +1,28 @@
 import { NgIf } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, NgForm, NgModel, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DatePickerModule } from 'primeng/datepicker';
 import { Movement } from '../../../models/movement';
 import { MovementService } from '../../../services/movement.service';
 import { Router } from '@angular/router';
+import { HelperService } from '../../../services/helper.service';
+import { HotToastService } from '@ngxpert/hot-toast';
+import { SelectModule } from 'primeng/select';
 
 @Component({
   selector: 'app-create-movement',
-  imports: [FormsModule, ReactiveFormsModule, NgIf, DatePickerModule],
+  imports: [FormsModule, ReactiveFormsModule, NgIf, DatePickerModule, SelectModule],
   templateUrl: './create-movement.component.html',
   styleUrl: './create-movement.component.css'
 })
-export class CreateMovementComponent {
+export class CreateMovementComponent implements OnInit {
 
   newMovementForm: FormGroup;
 
   datePicker: Date = new Date();
   onlydata: Date = new Date();
+  categoryList: string[] = [];
+  categorySelected = '';
 
   newMovement: Movement = {
     year: 0,
@@ -33,7 +38,9 @@ export class CreateMovementComponent {
   constructor(
     public formBuilder: FormBuilder,
     private movementService: MovementService,
-    private route: Router
+    private route: Router,
+    private helperService: HelperService,
+    private toastService: HotToastService
   )
   {
     this.newMovementForm = this.formBuilder.group({
@@ -43,6 +50,18 @@ export class CreateMovementComponent {
       amount: ['', Validators.required],
       date: ['', Validators.required],
       description: ['', Validators.required],
+    });
+  }
+
+  ngOnInit(): void {
+    this.helperService.getCategories().subscribe({
+      next: (data) => {
+        this.categoryList = data;
+      },
+      error: (error) => {
+        console.log('Categories: ', error);
+        this.toastService.error('Elenco categorie mancante.');
+      }
     });
   }
 

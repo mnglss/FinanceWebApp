@@ -5,6 +5,7 @@ using Application.Models;
 using Domain.Entities;
 using Domain.Interfaces;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Application.Services
 {
@@ -31,6 +32,7 @@ namespace Application.Services
                             Amount = -r.Sum(s => s.Amount),
                             CategoryPercentage = Math.Round(100 * r.Sum(s => -s.Amount) / dashboard.TotalIncome, 2)
                         })
+                        .OrderBy(m=> m.Category)
                         .ToList();
                     dashboard.TotalForCategory.AddRange(categoryList);
                     dashboard.Balance = dashboard.TotalIncome - dashboard.TotalOutcome;
@@ -40,6 +42,8 @@ namespace Application.Services
                     dashboard.PieDataSource.AddRange(categoryList.Select(p => p.CategoryPercentage));
                     dashboard.PieDataLabels.Add("Rimanenza");
                     dashboard.PieDataLabels.AddRange(categoryList.Select(p => p.Category));
+                    dashboard.PieDataColors.Add("rgba(3, 130, 35, 0.5)");
+                    dashboard.PieDataColors.AddRange(categoryList.Select(c => Category.Index[c.Category]).ToList());
                 }
             }
             catch (Exception ex)

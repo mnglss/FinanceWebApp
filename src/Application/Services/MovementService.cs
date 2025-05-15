@@ -32,7 +32,7 @@ namespace Application.Services
                     Date = DateOnly.Parse(movementRequest.date), 
                     Category = movementRequest.category, 
                     Description = movementRequest.description, 
-                    Amount = movementRequest.amount, 
+                    Amount = movementRequest.category == "Stipendio" ? Math.Abs(movementRequest.amount) : Math.Abs(movementRequest.amount)*-1, 
                     UserId = movementRequest.userId 
                 };
 

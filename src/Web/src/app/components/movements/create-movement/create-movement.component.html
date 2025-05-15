@@ -23,7 +23,8 @@
                 </div>
                 <div class="mb-3">
                   <label for="category" class="form-label">Categoria</label>
-                  <input type="text" id="category" formControlName="category" class="form-control" />
+                  <!--<input type="text" id="category" formControlName="category" class="form-control" />-->
+                  <p-select [options]="categoryList " [(ngModel)]="categorySelected" placeholder="Seleziona la categoria" formControlName="category" />
                 </div>
                 <div class="mb-3">
                   <label for="description" class="form-label">Descrizione</label>

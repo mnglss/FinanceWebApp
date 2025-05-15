@@ -10,6 +10,7 @@
 
         public List<double> PieDataSource { get; set; } = [];
         public List<string> PieDataLabels { get; set; } = [];
+        public List<string> PieDataColors { get; set; } = [];
 
     }
 

@@ -49,10 +49,9 @@ export class MovementListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (!this.authService.isLogged()) {
-      // Se l'utente non è loggato, reindirizza alla pagina di login
-      window.location.href = '/login';
-    }
+    if (!this.authService.isLogged()) 
+      this.router.navigate(['/login']);
+    
     this.userData = this.authService.readUserData(); // Legge i dati dell'utente
     //console.log('User data.roles:', this.userData.roles); // Mostra i dati dell'utente nella console
     this.canModify = this.userData.roles.includes('User'); // Controlla se l'utente può modificare
