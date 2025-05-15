@@ -1,14 +1,14 @@
-import { DatePipe, NgIf } from '@angular/common';
+import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, NgForm, NgModel, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DatePickerModule } from 'primeng/datepicker';
 import { Movement } from '../../../models/movement';
 import { MovementService } from '../../../services/movement.service';
-import { Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-movement',
-  imports: [FormsModule, ReactiveFormsModule, NgIf, DatePickerModule, DatePipe],
+  imports: [FormsModule, ReactiveFormsModule, NgIf, DatePickerModule],
   templateUrl: './create-movement.component.html',
   styleUrl: './create-movement.component.css'
 })

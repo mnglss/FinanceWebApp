@@ -29,7 +29,7 @@ namespace API.Controllers
                 movementUserRequest.Month
                 );
             var response = await movementService.GetByUserIdAsync(request);
-            return response.ToHttpResponse();
+            return response!.ToHttpResponse();
         }
     }
 }
