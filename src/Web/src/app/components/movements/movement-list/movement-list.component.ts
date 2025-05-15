@@ -20,11 +20,11 @@ interface Month {
   styleUrl: './movement-list.component.css'
 })
 export class MovementListComponent implements OnInit {
-  userData: User|any; // Crea un'istanza dell'oggetto userData
-  canModify: boolean = false; // Crea un'istanza della variabile canModify
-  canDelete: boolean = false; // Crea un'istanza della variabile canDelete
-  yearsList: number[] = [2024, 2025]; // Crea un'istanza dell'array di anni
-  selectedYears: number[] = [2025]; // Crea un'istanza dell'anno selezionato
+  userData: User|any;
+  canModify: boolean = false;
+  canDelete: boolean = false;
+  yearsList: number[] = [2024, 2025];
+  selectedYears: number[] = [2025];
   monthsList: Month[] = [
     {name:'Gennaio', code:'1'},
     {name:'Febbraio', code:'2'},
@@ -38,9 +38,9 @@ export class MovementListComponent implements OnInit {
     {name:'Ottobre', code:'10'},
     {name:'Novembre', code:'11'},
     {name:'Dicembre', code:'12'},
-  ]; // Crea un'istanza dell'array di mesi
-  selectedMonths: number[] = [5] // Crea un'istanza del mese selezionato
-  movements: any[] = []; // Crea un'istanza dell'array di movimenti
+  ];
+  selectedMonths = ['5'];
+  movements: any[] = [];
   constructor(
     private authService: AuthService,
     private movementService: MovementService,
@@ -57,7 +57,7 @@ export class MovementListComponent implements OnInit {
     //console.log('User data.roles:', this.userData.roles); // Mostra i dati dell'utente nella console
     this.canModify = this.userData.roles.includes('User'); // Controlla se l'utente può modificare
     this.canDelete = this.userData.roles.includes('User'); // Controlla se l'utente può eliminare
-    this.updateData(this.selectedYears, this.selectedMonths);
+    this.updateData(this.selectedYears, this.convertMonthList(this.selectedMonths));
 
   }
 
@@ -65,7 +65,7 @@ export class MovementListComponent implements OnInit {
     console.log('Selected years:', this.selectedYears);
     console.log('Selected months:', this.selectedMonths);
      if (this.selectedYears && this.selectedMonths)
-      this.updateData(this.selectedYears, this.selectedMonths);
+      this.updateData(this.selectedYears, this.convertMonthList(this.selectedMonths));
     else {
        alert('Please select at least one year and one month.');
        this.movements = []; // Resetta l'array dei movimenti
@@ -92,4 +92,11 @@ export class MovementListComponent implements OnInit {
     this.router.navigate(['/createMovement']);
   }
 
+  convertMonthList(monthsList: string[]): number[]{
+    const result: number[] = [];
+    for (const month of monthsList) {
+        result.push(parseInt(month));
+    }
+    return result;
+  }
 }

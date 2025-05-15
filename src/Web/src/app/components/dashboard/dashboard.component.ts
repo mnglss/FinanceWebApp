@@ -100,25 +100,24 @@ export class DashboardComponent implements OnInit {
     console.log('Selected months:', this.selectedMonths);
      if (this.selectedYears && this.selectedMonths) {
       this.getData(this.selectedYears, this.convertMonthList(this.selectedMonths));
-        //this.getData(this.selectedYears, this.selectedMonths);
       }
     else {
        alert('Please select at least one year and one month.');
-       this.DashboardPieDataSource = undefined; // Resetta l'array dei movimenti
+       this.DashboardPieDataSource = undefined;
     }
   }
 
   getData(years: number[], months: number[]): void {
     this.DashboardService.getDashboardData(years, months).subscribe({
       next: (data) => {
-        console.log('Dashboard Data:', data); // Mostra i dati dei movimenti nella console
-        const movementsDataString = JSON.stringify(data); // Converte i dati in una stringa JSON
-        const movementsJson = JSON.parse(movementsDataString); // Converte la stringa JSON in un oggetto
-        this.DashboardPieDataSource = movementsJson.value; // Assegna i dati dei movimenti all'array
+        console.log('Dashboard Data:', data);
+        const movementsDataString = JSON.stringify(data);
+        const movementsJson = JSON.parse(movementsDataString);
+        this.DashboardPieDataSource = movementsJson.value;
         this.initChart();
       },
       error: (error) => {
-        console.error('Error fetching movements data:', error); // Mostra l'errore nella console
+        console.error('Error fetching movements data:', error);
       }
     });
   }
