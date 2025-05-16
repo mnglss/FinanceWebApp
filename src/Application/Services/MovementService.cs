@@ -10,6 +10,7 @@ namespace Application.Services
 {
     public class MovementService(
         IValidator<MovementRequest> movementRequestValidator,
+        IValidator<MovementByUserIdRequest> movementByUserIdValidator,
         IMovementRepository movementRepository,
         IUnitOfWork unitOfWork
     ) : IMovementService
@@ -51,6 +52,13 @@ namespace Application.Services
             var empty = Enumerable.Empty<Movement>();
             try
             {
+                var validationResult = await movementByUserIdValidator.ValidateAsync(request);
+                if (!validationResult.IsValid)
+                {
+                    var errors = validationResult.Errors.Select(x => x.ErrorMessage);
+                    return Result.Failure<List<Movement>>(MovementError.InvalidRequest(errors));
+                }
+
                 var movements = await movementRepository.GetByUserIdAsync(request.userId, request.year, request.month);
                 if (movements == null || movements.Count == 0)
                     return Result.Success<List<Movement>>([.. empty]);
