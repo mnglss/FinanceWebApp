@@ -7,6 +7,11 @@ import { FormsModule } from '@angular/forms';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { User } from '../../../models/user';
 import { Router } from '@angular/router';
+import { MenuItem } from 'primeng/api';
+import { Menubar } from 'primeng/menubar';
+import { MenubarModule } from 'primeng/menubar';
+import { DownloadService } from '../../../services/download.service';
+import { HotToastService } from '@ngxpert/hot-toast';
 
 interface Month {
     name: string,
@@ -15,7 +20,7 @@ interface Month {
 
 @Component({
   selector: 'app-movement-list',
-  imports: [NgFor, DatePipe, CurrencyPipe, MultiSelectModule, FormsModule, FloatLabelModule],
+  imports: [NgFor, DatePipe, CurrencyPipe, MultiSelectModule, FormsModule, FloatLabelModule, Menubar, MenubarModule],
   templateUrl: './movement-list.component.html',
   styleUrl: './movement-list.component.css'
 })
@@ -41,17 +46,59 @@ export class MovementListComponent implements OnInit {
   ];
   selectedMonths = ['5'];
   movements: any[] = [];
+
+  download: MenuItem[] | undefined;
+
   constructor(
     private authService: AuthService,
     private movementService: MovementService,
     private router: Router,
+    private downloadService: DownloadService,
+    private toastService: HotToastService
   ) {
   }
 
   ngOnInit(): void {
-    if (!this.authService.isLogged()) 
+    if (!this.authService.isLogged())
       this.router.navigate(['/login']);
-    
+    this.download = [
+      {
+        label: 'Download',
+        icon: 'pi pi-download',
+        items: [
+          {
+            label: 'Excel',
+            icon: 'pi pi-file-excel',
+            command: () => {
+              this.downloadService.getExcel(this.selectedYears, this.convertMonthList(this.selectedMonths)).subscribe({
+                next: (data) => {
+                  this.toastService.success('Download Excel successfully!');
+                },
+                error: (error) => {
+                  this.toastService.error('Error downloading excel movements data!');
+                  console.error('Error downloading excel movements data:', error); // Mostra l'errore nella console
+                }
+              });
+            }
+          },
+          {
+            label: 'Pdf',
+            icon: 'pi pi-file-pdf',
+            command: () => {
+              this.downloadService.getPdf(this.selectedYears, this.convertMonthList(this.selectedMonths)).subscribe({
+                next: (data) => {
+                  this.toastService.success('Download Pdf successfully!')
+                },
+                error: (error) => {
+                  this.toastService.error('Error downloading Pdf movements data!');
+                  console.error('Error downloading pdf movements data:', error); // Mostra l'errore nella console
+                }
+              });
+            }
+          }
+        ]
+      }
+    ];
     this.userData = this.authService.readUserData(); // Legge i dati dell'utente
     //console.log('User data.roles:', this.userData.roles); // Mostra i dati dell'utente nella console
     this.canModify = this.userData.roles.includes('User'); // Controlla se l'utente può modificare
