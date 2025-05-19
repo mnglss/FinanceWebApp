@@ -13,14 +13,9 @@ namespace API.Controllers
     {
         [HttpPost()]
         [Authorize(Roles = $"{FinanceAppRoles.Admin},{FinanceAppRoles.User}")]
-        public async Task<IResult> GetMovements([FromBody, Required] MovementUserRequest movementUserRequest)
+        public async Task<IResult> GetMovements([FromBody, Required] MovementByUserIdRequest movementUserRequest)
         {
-            var request = new MovementByUserIdRequest(
-                movementUserRequest.UserId,
-                movementUserRequest.Year,
-                movementUserRequest.Month
-                );
-            var response = await dashBoardService.GetDashBoardDataAsync(request);
+            var response = await dashBoardService.GetDashBoardDataAsync(movementUserRequest);
             return response.ToHttpResponse();
         }
     }

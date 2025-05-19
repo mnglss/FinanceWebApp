@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
@@ -13,28 +13,48 @@ export class DownloadService {
     private authService: AuthService
   ) { }
 
-  getExcel(years: Number[], months: Number[]): Observable<any[]>{
+  getExcel(years: Number[], months: Number[]){
     const userData = this.authService.readUserData();
     const movementByUserIdDto = {
       userId: userData.idUser,
       year: years,
       month: months,
     }
-    return this.httpClient.post<any[]>(`${this.apiUrl}/excel`, movementByUserIdDto);
+     const options ={
+      params:
+        new HttpParams()
+          .set('userId', userData.idUser)
+          .set('year', years.join(", "))
+          .set('month', months.join(", "))
+
+    };
+    // return this.httpClient.post<Blob>(`${this.apiUrl}/excel`, movementByUserIdDto);
+    return this.httpClient.get(`${this.apiUrl}/excel`, {
+      observe: 'response',
+      responseType: 'blob',
+      params: options.params
+    });
   }
 
-    getPdf(years: Number[], months: Number[]): Observable<any[]>{
+  getPdf(years: Number[], months: Number[]){
     const userData = this.authService.readUserData();
     const movementByUserIdDto = {
       userId: userData.idUser,
       year: years,
       month: months,
-    }
-    return this.httpClient.post<any[]>(`${this.apiUrl}/pdf`, movementByUserIdDto, {
-      headers: {
-        "Accept": "application/pdf"
-      },
-      responseType: undefined
+    };
+    const options ={
+      params:
+        new HttpParams()
+          .set('userId', userData.idUser)
+          .set('year', years.join(", "))
+          .set('month', years.join(", "))
+    };
+    //return this.httpClient.post(`${this.apiUrl}/pdf`, movementByUserIdDto);
+    return this.httpClient.get(`${this.apiUrl}/pdf`, {
+      observe: 'response',
+      responseType: 'blob',
+      params: options.params
     });
   }
 }

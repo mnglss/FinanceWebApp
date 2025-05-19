@@ -19,8 +19,8 @@ export class MovementService {
     const userData = this.authService.readUserData();
     const movementByUserIdDto = {
       userId: userData.idUser,
-      year: years,
-      month: months,
+      years: years.join(", "),
+      months: months.join(", "),
     }
     return this.httpClient.post<any[]>(`${this.apiUrl}/ByUserId`, movementByUserIdDto);
   }

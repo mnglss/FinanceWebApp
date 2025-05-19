@@ -7,7 +7,7 @@
     public record RemoveRoleRequest(int userId, int roleId);
 
     public record MovementRequest(int id, int year, int month, double amount, string date, string description, string category, int userId);
-    public record MovementByUserIdRequest(int userId, int[] year, int[] month);
+    public record MovementByUserIdRequest(int userId, string years, string months);
 
     public record RequestFile(int userId, int[] year, int[] month);
 }

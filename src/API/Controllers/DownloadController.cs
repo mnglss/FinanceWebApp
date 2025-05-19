@@ -10,8 +10,8 @@ namespace API.Controllers
 {
     public class DownloadController(IMovementService movementService) : BaseApiController
     {
-        [HttpPost("Excel")]
-        public async Task<FileResult> Excel([FromBody, Required] MovementByUserIdRequest request)
+        [HttpGet("Excel")]
+        public async Task<FileResult> Excel([FromQuery, Required] MovementByUserIdRequest request)
         {
             List<Movement> movementlist = [];
             var result = await movementService.GetByUserIdAsync(request);
@@ -23,8 +23,8 @@ namespace API.Controllers
             return File(file, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "ListaMovimenti.xlsx");
         }
 
-        [HttpPost("Pdf")]
-        public async Task<FileResult> Pdf([FromBody, Required] MovementByUserIdRequest request)
+        [HttpGet("Pdf")]
+        public async Task<FileResult> Pdf([FromQuery, Required] MovementByUserIdRequest request)
         {
             List<Movement> movementlist = [];
             var result = await movementService.GetByUserIdAsync(request);

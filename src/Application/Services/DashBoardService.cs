@@ -17,7 +17,9 @@ namespace Application.Services
             var empty = Enumerable.Empty<Movement>();
             try
             {
-                var movements = await movementRepository.GetByUserIdAsync(request.userId, request.year, request.month);
+                var years = request.years.Split(',').Select(int.Parse).ToArray();
+                var months = request.months.Split(',').Select(int.Parse).ToArray();
+                var movements = await movementRepository.GetByUserIdAsync(request.userId, years, months);
                 if (movements!.Count != 0)
                 {
                     dashboard.TotalIncome = movements.Where(m => m.Amount > 0).Sum(m => m.Amount);

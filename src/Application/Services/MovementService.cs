@@ -5,6 +5,7 @@ using Application.Models;
 using Domain.Entities;
 using Domain.Interfaces;
 using FluentValidation;
+using SixLabors.Fonts.Tables.AdvancedTypographic;
 
 namespace Application.Services
 {
@@ -59,7 +60,9 @@ namespace Application.Services
                     return Result.Failure<List<Movement>>(MovementError.InvalidRequest(errors));
                 }
 
-                var movements = await movementRepository.GetByUserIdAsync(request.userId, request.year, request.month);
+                var years = request.years.Split(',').Select(int.Parse).ToArray();
+                var months = request.months.Split(',').Select(int.Parse).ToArray();
+                var movements = await movementRepository.GetByUserIdAsync(request.userId, years, months);
                 if (movements == null || movements.Count == 0)
                     return Result.Success<List<Movement>>([.. empty]);
                 return Result.Success(movements);

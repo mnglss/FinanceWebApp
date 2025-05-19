@@ -1,3 +1,4 @@
+import { ContactComponent } from './../../contact/contact.component';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { MovementService } from '../../../services/movement.service';
@@ -12,6 +13,7 @@ import { Menubar } from 'primeng/menubar';
 import { MenubarModule } from 'primeng/menubar';
 import { DownloadService } from '../../../services/download.service';
 import { HotToastService } from '@ngxpert/hot-toast';
+import { DomSanitizer } from '@angular/platform-browser';
 
 interface Month {
     name: string,
@@ -54,7 +56,8 @@ export class MovementListComponent implements OnInit {
     private movementService: MovementService,
     private router: Router,
     private downloadService: DownloadService,
-    private toastService: HotToastService
+    private toastService: HotToastService,
+    private sanitizer: DomSanitizer
   ) {
   }
 
@@ -62,6 +65,11 @@ export class MovementListComponent implements OnInit {
     if (!this.authService.isLogged())
       this.router.navigate(['/login']);
     this.download = [
+      {
+        label: 'New',
+        icon: 'pi pi-plus-circle',
+        command: () => { this.onCreate(); }
+      },
       {
         label: 'Download',
         icon: 'pi pi-download',
@@ -71,7 +79,8 @@ export class MovementListComponent implements OnInit {
             icon: 'pi pi-file-excel',
             command: () => {
               this.downloadService.getExcel(this.selectedYears, this.convertMonthList(this.selectedMonths)).subscribe({
-                next: (data) => {
+                next: (response) => {
+                  this.readBlob(response);
                   this.toastService.success('Download Excel successfully!');
                 },
                 error: (error) => {
@@ -86,7 +95,8 @@ export class MovementListComponent implements OnInit {
             icon: 'pi pi-file-pdf',
             command: () => {
               this.downloadService.getPdf(this.selectedYears, this.convertMonthList(this.selectedMonths)).subscribe({
-                next: (data) => {
+                next: (response) => {
+                  this.readBlob(response);
                   this.toastService.success('Download Pdf successfully!')
                 },
                 error: (error) => {
@@ -105,6 +115,16 @@ export class MovementListComponent implements OnInit {
     this.canDelete = this.userData.roles.includes('User'); // Controlla se l'utente può eliminare
     this.updateData(this.selectedYears, this.convertMonthList(this.selectedMonths));
 
+  }
+
+  readBlob(data: any){
+    let fileName = data.headers.get('content-disposition')?.split(';')[1].split('=')[1];
+    let blob = data.body as Blob;
+    let a = document.createElement('a');
+    a.download = fileName!;
+    a.href = window.URL.createObjectURL(blob);
+    a.click();
+    a.href = '';
   }
 
   onPeriodsChanged(): void {
@@ -144,5 +164,40 @@ export class MovementListComponent implements OnInit {
         result.push(parseInt(month));
     }
     return result;
+  }
+
+
+  createFileType(e: any): string {
+    let fileType: string = "";
+    if (e == 'pdf' || e == 'csv') {
+      fileType = `application/${e}`;
+    }
+    else if (e == 'jpeg' || e == 'jpg' || e == 'png') {
+      fileType = `image/${e}`;
+    }
+    else if (e == 'txt') {
+      fileType = 'text/plain';
+    }
+
+    else if (e == 'ppt' || e == 'pot' || e == 'pps' || e == 'ppa') {
+      fileType = 'application/vnd.ms-powerpoint';
+    }
+    else if (e == 'pptx') {
+      fileType = 'application/vnd.openxmlformats-officedocument.presentationml.presentation';
+    }
+    else if (e == 'doc' || e == 'dot') {
+      fileType = 'application/msword';
+    }
+    else if (e == 'docx') {
+      fileType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+    }
+    else if (e == 'xls' || e == 'xlt' || e == 'xla') {
+      fileType = 'application/vnd.ms-excel';
+    }
+    else if (e == 'xlsx') {
+      fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+    }
+
+    return fileType;
   }
 }

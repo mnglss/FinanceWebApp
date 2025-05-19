@@ -20,8 +20,8 @@ export class DashboardService {
     //const userId = userData ? userData.id : null; // Ottieni l'ID dell'utente dal localStorage
     const requestBody = {
       userId: userData.idUser,
-      year: years,
-      month: months,
+      years: years.join(", "),
+      months: months.join(", "),
     }
     return this.httpClient.post<any>(`${this.apiUrl}`, requestBody); // Modifica l'URL in base alla tua APIe
 
