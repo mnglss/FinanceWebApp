@@ -13,6 +13,7 @@ namespace Application.Extensions
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IMovementService, MovementService>();
             services.AddScoped<IDashBoardService, DashBoardService>();
+            services.AddScoped<IHealthService, HeathService>();
             return services;
         }
     }

@@ -19,6 +19,7 @@ namespace Infrastructure.Extensions
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserRoleRepository, UserRoleRepository>();
             services.AddScoped<IMovementRepository, MovementRepository>();
+            services.AddScoped<IHealthRepository, HealthRepository>();
 
             return services;
         }

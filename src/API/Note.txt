@@ -1,5 +1,6 @@
 Run API => dotnet run --project src/API --launch-profile https
 Install Swagger => dotnet add package Swashbuckle.AspNetCore
 
+cd src/Infrastructure
 Migration => dotnet ef migrations add SyncDb --startup-project ..\API\API.csproj  --project .\Infrastructure.csproj  --output-dir Migrations
 Database Update => dotnet ef database update --startup-project ..\API\API.csproj  --project .\Infrastructure.csproj

@@ -8,7 +8,7 @@ namespace Infrastructure.EntityFramework.Configuration
     {
         public void Configure(EntityTypeBuilder<Audit> builder)
         {
-            builder.ToTable("LogAudits", "Log");
+            builder.ToTable("Audits", "Log");
             builder.HasKey(l => l.Id);
             builder.Property(l => l.Date)
                 .IsRequired();
