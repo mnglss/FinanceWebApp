@@ -1,15 +1,17 @@
-﻿using Application.Models;
+﻿using Application.Interfaces;
+using Application.Models;
 using FinanceWebApp.API.Controllers;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace API.Controllers
 {
-    public class HelperController : BaseApiController
+    public class HelperController(IMovementService movementService) : BaseApiController
     {
         [HttpGet("Categories")]
-        public IResult GetColors()
+        public async Task<IResult> GetColors()
         {
-            return Results.Ok(Category.Index.Keys.Order());
+            return Results.Ok(await movementService.GetCategoryColorAsync());
         }
     }
 }

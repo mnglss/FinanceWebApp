@@ -45,7 +45,9 @@ namespace Application.Services
                     dashboard.PieDataLabels.Add("Rimanenza");
                     dashboard.PieDataLabels.AddRange(categoryList.Select(p => p.Category));
                     dashboard.PieDataColors.Add("rgba(3, 130, 35, 0.5)");
-                    dashboard.PieDataColors.AddRange(categoryList.Select(c => Category.Index[c.Category]).ToList());
+                    //dashboard.PieDataColors.AddRange(categoryList.Select(c => Category.Index[c.Category]).ToList());
+                    var colorList = await movementRepository.GetCategoryColorsAsync();
+                    dashboard.PieDataColors.AddRange(colorList.Select(c => c.ColorRGBA).ToList());
                 }
             }
             catch (Exception ex)

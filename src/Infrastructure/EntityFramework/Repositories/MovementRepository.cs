@@ -20,5 +20,10 @@ namespace Infrastructure.EntityFramework.Repositories
                 .ThenBy(m => m.Date)
                 .ToListAsync();
         }
+
+        public async Task<List<Category>> GetCategoryColorsAsync()
+        {
+            return await context.Categories.OrderBy(c => c.Name).ToListAsync();
+        }
     }
 }

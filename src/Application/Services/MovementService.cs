@@ -72,5 +72,11 @@ namespace Application.Services
                 return Result.Failure<List<Movement>>(MovementError.InternalServerError(ex.Message));
             }
         }
+
+        public async Task<Result<List<string>>> GetCategoryColorAsync()
+        {
+            var list = await movementRepository.GetCategoryColorsAsync();
+            return Result.Success(list.Select(c => c.Name).ToList());
+        }
     }
 }

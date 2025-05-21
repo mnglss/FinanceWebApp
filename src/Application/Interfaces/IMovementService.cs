@@ -8,5 +8,6 @@ namespace Application.Interfaces
     {
         Task<Result<string>> CreateAsync(MovementRequest movementCreateRequest);
         Task<Result<List<Movement>>?> GetByUserIdAsync(MovementByUserIdRequest movementByUserId);
+        Task<Result<List<string>>> GetCategoryColorAsync();
     }
 }
