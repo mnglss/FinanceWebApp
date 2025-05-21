@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 import { Observable } from 'rxjs';
+import { UtilsService } from './utils.service';
 
 
 
@@ -9,10 +10,11 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class DashboardService {
-  private apiUrl = 'https://localhost:7134/api/dashboard'; // URL del tuo endpoint API
+  //private apiUrl = 'https://localhost:7134/api/dashboard'; // URL del tuo endpoint API
   constructor(
     private httpClient: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    private utilsService: UtilsService
   ) { }
 
   getDashboardData(years: number[], months: number[]): Observable<any> {
@@ -23,7 +25,7 @@ export class DashboardService {
       years: years.join(", "),
       months: months.join(", "),
     }
-    return this.httpClient.post<any>(`${this.apiUrl}`, requestBody); // Modifica l'URL in base alla tua APIe
+    return this.httpClient.post<any>(`${this.utilsService.financeApiUrl}/dashboard`, requestBody); // Modifica l'URL in base alla tua APIe
 
   }
 }

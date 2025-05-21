@@ -1,3 +1,4 @@
+import { UtilsService } from './utils.service';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -8,14 +9,12 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
 
-  private apiUrl = 'https://localhost:7134/api/auth'; // URL dell'API di autenticazione
-
-
-
+  //private apiUrl = 'https://localhost:7134/api/auth'; // URL dell'API di autenticazione
 
   constructor(
     private httpClient: HttpClient,
-    private router: Router
+    private router: Router,
+    private utilsService: UtilsService
   ) { }
 
   login(email: string, password: string): Observable<any> {
@@ -23,7 +22,7 @@ export class AuthService {
       email: email,
       password: password
     };
-    return this.httpClient.post<any>(`${this.apiUrl}/login`, { credentials });
+    return this.httpClient.post<any>(`${this.utilsService.financeApiUrl}/auth/login`, { credentials });
   }
 
   saveUserData(res: any): void {

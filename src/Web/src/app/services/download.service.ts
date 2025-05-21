@@ -1,3 +1,4 @@
+import { UtilsService } from './utils.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -7,10 +8,12 @@ import { AuthService } from './auth.service';
   providedIn: 'root'
 })
 export class DownloadService {
-  private apiUrl = 'https://localhost:7134/api/download';
+  //private apiUrl = 'https://localhost:7134/api/download';
+
   constructor(
     private httpClient: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    private utilsService: UtilsService
   ) { }
 
   getExcel(years: Number[], months: Number[]){
@@ -29,7 +32,7 @@ export class DownloadService {
 
     };
     // return this.httpClient.post<Blob>(`${this.apiUrl}/excel`, movementByUserIdDto);
-    return this.httpClient.get(`${this.apiUrl}/excel`, {
+    return this.httpClient.get(`${this.utilsService.financeApiUrl}/download/excel`, {
       observe: 'response',
       responseType: 'blob',
       params: options.params
@@ -51,7 +54,7 @@ export class DownloadService {
           .set('month', years.join(", "))
     };
     //return this.httpClient.post(`${this.apiUrl}/pdf`, movementByUserIdDto);
-    return this.httpClient.get(`${this.apiUrl}/pdf`, {
+    return this.httpClient.get(`${this.utilsService.financeApiUrl}/download/pdf`, {
       observe: 'response',
       responseType: 'blob',
       params: options.params

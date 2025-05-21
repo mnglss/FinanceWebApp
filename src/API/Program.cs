@@ -36,8 +36,8 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+//if (app.Environment.IsDevelopment())
+//{
     app.UseOpenApi();
     app.MapOpenApi(); // https://localhost:7134/openapi/v1.json https://localhost:7134/api-docs/index.html https://localhost:7134/scalar/v1
     app.UseSwagger();
@@ -49,7 +49,7 @@ if (app.Environment.IsDevelopment())
         options.SpecUrl = "/openapi/v1.json";
     });
     app.MapScalarApiReference();
-}
+//}
 app.UseCors("FinanceWebApp");
 app.UseHttpsRedirection();
 app.MapControllers();
