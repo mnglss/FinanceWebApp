@@ -11,7 +11,10 @@ namespace API.Controllers
         [HttpGet("Categories")]
         public async Task<IResult> GetColors()
         {
-            return Results.Ok(await movementService.GetCategoryColorAsync());
+            var response = await movementService.GetCategoryColorAsync();
+            if (response.IsFailure)
+                return Results.Ok("Categorie non presenti!");
+            return Results.Ok(response.Value);
         }
     }
 }
