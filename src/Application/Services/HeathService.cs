@@ -24,6 +24,14 @@ namespace Application.Services
             return (await healthRepository.GetLastUpdateAsync()).ToShortDateString();
         }
 
+        public async Task RunHealthJob()
+        {
+            await GetLastCheckAsync();
+            await UpdateAsync();
+            await DeleteAsync();
+            await AddAsync();
+        }
+
         public async Task UpdateAsync()
         {
             await healthRepository.UpdateAsync();

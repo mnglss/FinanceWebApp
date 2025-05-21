@@ -7,5 +7,7 @@ namespace Application.Interfaces
         Task UpdateAsync();
         Task DeleteAsync();
         Task<string> AddAsync();
+
+        Task RunHealthJob();
     }
 }

@@ -1,5 +1,7 @@
 using API.Extensions;
 using Application.Extensions;
+using Application.ScheduledJob;
+using Coravel;
 using FluentValidation;
 using Infrastructure.Extensions;
 using Microsoft.OpenApi.Models;
@@ -54,6 +56,12 @@ app.UseHttpLogging();
 app.UseCors("FinanceWebApp");
 app.UseHttpsRedirection();
 app.MapControllers();
+
+app.Services.UseScheduler(scheduler =>
+{
+    scheduler.Schedule<HealthJob>()
+    .Weekly();
+});
 
 app.Run();
 

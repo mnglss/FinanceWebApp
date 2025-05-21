@@ -1,5 +1,7 @@
 using Application.Interfaces;
+using Application.ScheduledJob;
 using Application.Services;
+using Coravel;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Application.Extensions
@@ -14,6 +16,10 @@ namespace Application.Extensions
             services.AddScoped<IMovementService, MovementService>();
             services.AddScoped<IDashBoardService, DashBoardService>();
             services.AddScoped<IHealthService, HeathService>();
+            
+            services.AddScheduler();
+            services.AddTransient<HealthJob>();
+            
             return services;
         }
     }
