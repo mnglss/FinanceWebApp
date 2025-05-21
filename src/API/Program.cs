@@ -31,11 +31,12 @@ builder.Services.AddCors(options =>
                       });
 });
 
-
+builder.Services.AddHttpLogging();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.UseHttpLogging();
 //if (app.Environment.IsDevelopment())
 //{
     app.UseOpenApi();

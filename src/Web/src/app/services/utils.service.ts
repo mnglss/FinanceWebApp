@@ -5,6 +5,6 @@ import { Injectable } from '@angular/core';
 })
 export class UtilsService {
   //public fibanceApiUrl = 'https://localhost:7134/api';
-  public financeApiUrl = 'http://www.amweb.somee.com/api';
+  public financeApiUrl = 'https://www.amweb.somee.com/api';
   constructor() { }
 }
